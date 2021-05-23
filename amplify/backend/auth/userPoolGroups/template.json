@@ -5,10 +5,12 @@
             "Type": "String",
             "Default": "authallscreens59d1a2d8UserPoolId"
         },
+        
         "authallscreens59d1a2d8IdentityPoolId": {
             "Type": "String",
             "Default": "authallscreens59d1a2d8IdentityPoolId"
         },
+        
         "authallscreens59d1a2d8AppClientID": {
             "Type": "String",
             "Default": "authallscreens59d1a2d8AppClientID"
@@ -44,17 +46,20 @@
           "Properties" : {
               "GroupName" : "teachers",
               "Precedence" : 1,
+              
               "RoleArn" : {
                 "Fn::GetAtt": [
                     "teachersGroupRole",
                     "Arn"
                 ]
               },
+              
               "UserPoolId" : {
                 "Ref": "authallscreens59d1a2d8UserPoolId"
-              } 
+              }
             }
         },
+        
         "teachersGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -88,23 +93,27 @@
                 }
             }
         },
+     
     
         "studentsGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
               "GroupName" : "students",
               "Precedence" : 2,
+              
               "RoleArn" : {
                 "Fn::GetAtt": [
                     "studentsGroupRole",
                     "Arn"
                 ]
               },
+              
               "UserPoolId" : {
                 "Ref": "authallscreens59d1a2d8UserPoolId"
-              } 
+              }
             }
         },
+        
         "studentsGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -138,6 +147,8 @@
                 }
             }
         },
+     
+    
     
         "LambdaExecutionRole": {
             "Type": "AWS::IAM::Role",
@@ -147,13 +158,13 @@
                         "ShouldNotCreateEnvResources",
                         {
                            
-                        }, 
+                        },
                         {
 
                             "Fn::Join": [
                                 "",
                                 [
-                                  
+
                                   "allscreens59d1a2d8",
                                   "-ExecutionRole-",
                                   {
@@ -161,7 +172,7 @@
                                   }
                                 ]
                             ]
-                        }       
+                        }
                     ]
                 },
                 "AssumeRolePolicyDocument": {
@@ -276,7 +287,7 @@
                                 "    cognitoidentity.setIdentityPoolRoles(params).promise();",
                                 "    response.send(event, context, response.SUCCESS, {message: 'Successfully updated identity pool.'})",
                                 "    } catch(err) {",
-                                
+
                                 "        response.send(event, context, response.FAILED, {message: 'Error updating identity pool'});",
                                 "    }",
                                 "   };",
@@ -287,7 +298,7 @@
                     }
                 },
                 "Handler": "index.handler",
-                "Runtime": "nodejs10.x",
+                "Runtime": "nodejs12.x",
                 "Timeout": "300",
                 "Role": {
                     "Fn::GetAtt": [
@@ -333,7 +344,9 @@
             },
             "DependsOn": ["RoleMapFunction"]
         }
+   
     },
+    
     "Outputs": {
       
         "teachersGroupRole": {
@@ -343,7 +356,7 @@
                     "Arn"
                 ]
             }
-         
+        
         },
         
       
@@ -359,4 +372,5 @@
         
       
     }
+    
 }
